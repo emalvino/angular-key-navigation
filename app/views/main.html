@@ -1,0 +1,23 @@
+<div em-key-navigation-container="{'cycle': true, 'strictHorizontal': true}">
+  <div class="header">
+    <ul class="nav nav-pills pull-right">
+      <li ng-class="{'active': $currentFocused == 'home'}"><a ng-href="#" em-key-navigation="home">Home</a></li>
+      <li ng-class="{'active': $currentFocused == 'about'}"><a ng-href="#" em-key-navigation="about">About</a></li>
+      <li ng-class="{'active': $currentFocused == 'contact'}"><a ng-href="#" em-key-navigation="contact">Contact</a></li>
+    </ul>
+    <h3 class="text-muted">ngKeyNavigation</h3>
+  </div>
+
+  <div class="jumbotron">
+    <h1>'Allo, 'Allo!</h1>
+    <p class="lead">
+      <img src="images/yeoman.png" alt="I'm Yeoman"><br>
+      Always a pleasure scaffolding your apps.
+    </p>
+    <div class="row">
+      <a class="btn btn-lg btn-success col-md-4" ng-href="#" em-key-navigation="splendid">Splendid!</a>
+      <a class="btn btn-lg btn-success col-md-4" ng-href="#" em-key-navigation="happy">Happy!</a>
+      <a class="btn btn-lg btn-success col-md-4" ng-href="#" em-key-navigation="wiii">Wiiii!</a>
+    </div>
+  </div>
+</div>
