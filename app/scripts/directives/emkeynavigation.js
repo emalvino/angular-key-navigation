@@ -4,8 +4,11 @@ angular.module('emKeyNavigation', [])
 .directive('emKeyNavigationContainer', function () {
 	return {
 		restrict: 'EA',
-		scope: {},
-		controller: function($scope) {
+		scope: {
+			emSelected: '=?',
+			options: '=emKeyNavigationContainer'
+		},
+		controller: function($scope, $timeout) {
 			$scope.directions = {
 				left: {
 					key: 37,
@@ -43,21 +46,32 @@ angular.module('emKeyNavigation', [])
 			$scope.navigableElements = [];
 			$scope.currentElement = undefined;
 			$scope.setCurrentElement = function(element){
-				$scope.currentElement = element;
-				$scope.$currentFocused = element.id;
-				element.element.focus();
-				console.log($scope.$currentFocused);
-			};
-			this.registerNavigableElement = function(element, id){
-				var newElement = {
-					element: element,
-					id: id
-				};
-				$scope.navigableElements.push(newElement);
-				if(angular.isUndefined($scope.currentElement)){
-					$scope.setCurrentElement(newElement);
+				if($scope.currentElement !== element){
+					$scope.currentElement = element;
+					$scope.emSelected = element.id;
+					$timeout(function(){
+						element.element.focus();
+					},0);
+					console.log($scope.emSelected);
 				}
-				console.log($scope.navigableElements);
+			};
+			this.registerNavigableElement = function(element){
+				$scope.navigableElements.push(element);
+				if(angular.isUndefined($scope.currentElement)){
+					$scope.setCurrentElement(element);
+				}
+				var updateCallback = function(){
+					$scope.setCurrentElement(element);
+				};
+				element.element.on('focus', updateCallback);
+				$scope.$watch('options.followMouse', function(newValue){
+					if(newValue === true){
+						element.element.on('mouseover', updateCallback);
+					}
+					else{
+						element.element.off('mouseover', updateCallback);
+					}
+				});
 			};
 			$scope.calculateDistance = function(offset1, offset2){
 				var delta = {
@@ -99,8 +113,7 @@ angular.module('emKeyNavigation', [])
 				}
 			};
 		},
-		link: function postLink(scope, element, attrs) {
-			scope.options = scope.$eval(attrs.emKeyNavigationContainer);
+		link: function postLink(scope, element) {
 			element.on('keydown', function(event){
 				angular.forEach(scope.directions, function(direction){
 					if(event.keyCode === direction.key) {
@@ -115,10 +128,10 @@ angular.module('emKeyNavigation', [])
 	return {
 		restrict: 'A',
 		require: '^emKeyNavigationContainer',
-		scope: {},
 		link: function postLink(scope, element, attrs, controller) {
-			var id = attrs.emKeyNavigation;
-			controller.registerNavigableElement(element, id);
+			var id = scope.$eval(attrs.emKeyNavigation);
+			var thisElement = {element: element, id: id};
+			controller.registerNavigableElement(thisElement);
 		}
 	};
 });
