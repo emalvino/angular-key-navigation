@@ -1,5 +1,7 @@
 angular-key-navigation
 ======================
+##Latest version
+0.0.0
 **Still under development**
 
 ##Description
@@ -24,7 +26,7 @@ It exposes a property to store the currently selected item on the scope, using t
 	Currently selected item is: {{currentlySelected}}
 </div>
 ```
-Or for example, to highlite the selected element:
+Or for example, to highlight the selected element:
 ```HTML
 <div em-key-navigation-container selected="currentlySelected">
 	<a ng-href="#" ng-class="{'active': currentlySelected === 'detail'}" em-key-navigation="detail">Detail</a>
@@ -39,15 +41,16 @@ It can optionally use a configuration object:
 ```
 
 ###Configuration options
-Option          |Default value|Description
-cycle           |false        |If true once the last element on a direction is reached and another key event in that direction is received, it will wrap to the first element. Otherwise it will just stay there.
-strictHorizontal|false        |If true only elements on the same height* will be considered when moving left or right. Otherwise it will go to the nearest element regardless of it's vertical position.
-strictVertical  |false        |If true only elements on the same horizontal position* will be considered when moving up or down. Otherwise it will go to the nearest element regardless of it's horizontal position.
-followMouse     |false        |If true the focused element will be updated when the mouse moves over it (`mouseover` event).
-*Acording to the result from the element's offset() method.
+|Option          |Default value|Description|
+|----------------|-------------|-----------|
+|cycle           |false        |If true once the last element on a direction is reached and another key event in that direction is received, it will wrap to the first element. Otherwise it will just stay there.|
+|strictHorizontal|false        |If true only elements on the same height* will be considered when moving left or right. Otherwise it will go to the nearest element regardless of it's vertical position.|
+|strictVertical  |false        |If true only elements on the same horizontal position* will be considered when moving up or down. Otherwise it will go to the nearest element regardless of it's horizontal position.|
+|followMouse     |false        |If true the focused element will be updated when the mouse moves over it (`mouseover` event).|
+*Acording to the result from the element's `offset()` method.
 Example:
 ```JavaScript
-$scope.navigationOptions={
+$scope.navigationOptions = {
 	cycle: true,
 	strictHorizontal: true,
 	strictVertical: false,
@@ -59,4 +62,8 @@ Directive used on each focusable element to register them and be taken into acco
 ```HTML
 <a ng-href="#" em-key-navigation>Detail</a>
 ```
-In order to be able to identify the currently focused element (as described on the `selected` attribute from the container directive), an id should be provided.
+In order to be able to identify the currently focused element (as described on the `selected` attribute from the container directive), an id should be provided:
+```HTML
+<a ng-href="#" em-key-navigation="detail">Detail</a>
+<a ng-href="#" em-key-navigation="home">Home</a>
+```
