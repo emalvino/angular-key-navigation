@@ -18,9 +18,9 @@ Container directive. It handles all the key events and calculates the next eleme
 ...
 </div>
 ```
-It exposes a property to store the currently selected item on the scope, using the `selected` attribute:
+It exposes a property to store the currently selected item on the scope, using the `em-key-navigation-selected` attribute:
 ```HTML
-<div em-key-navigation-container selected="currentlySelected">
+<div em-key-navigation-container em-key-navigation-selected="currentlySelected">
 	<a ng-href="#" em-key-navigation="detail">Detail</a>
 	<a ng-href="#" em-key-navigation="home">Home</a>
 	Currently selected item is: {{currentlySelected}}
@@ -28,7 +28,7 @@ It exposes a property to store the currently selected item on the scope, using t
 ```
 Or for example, to highlight the selected element:
 ```HTML
-<div em-key-navigation-container selected="currentlySelected">
+<div em-key-navigation-container em-key-navigation-selected="currentlySelected">
 	<a ng-href="#" ng-class="{'active': currentlySelected === 'detail'}" em-key-navigation="detail">Detail</a>
 	<a ng-href="#" ng-class="{'active': currentlySelected === 'home'}" em-key-navigation="home">Home</a>
 </div>
@@ -41,12 +41,12 @@ It can optionally use a configuration object:
 ```
 
 ###Configuration options
-|Option          |Default value|Description|
-|----------------|-------------|-----------|
-|cycle           |false        |If true once the last element on a direction is reached and another key event in that direction is received, it will wrap to the first element. Otherwise it will just stay there.|
-|strictHorizontal|false        |If true only elements on the same height* will be considered when moving left or right. Otherwise it will go to the nearest element regardless of it's vertical position.|
-|strictVertical  |false        |If true only elements on the same horizontal position* will be considered when moving up or down. Otherwise it will go to the nearest element regardless of it's horizontal position.|
-|followMouse     |false        |If true the focused element will be updated when the mouse moves over it (`mouseover` event).|
+|Option          |Default|Description|
+|----------------|-------|-----------|
+|cycle           |false  |If true once the last element on a direction is reached and another key event in that direction is received, it will wrap to the first element. Otherwise it will just stay there.|
+|strictHorizontal|false  |If true only elements on the same height* will be considered when moving left or right. Otherwise it will go to the nearest element regardless of it's vertical position.|
+|strictVertical  |false  |If true only elements on the same horizontal position* will be considered when moving up or down. Otherwise it will go to the nearest element regardless of it's horizontal position.|
+|followMouse     |false  |If true the focused element will be updated when the mouse moves over it (`mouseover` event).|
 *Acording to the result from the element's `offset()` method.
 Example:
 ```JavaScript

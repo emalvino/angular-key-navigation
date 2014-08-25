@@ -5,7 +5,7 @@ angular.module('emKeyNavigation', [])
 	return {
 		restrict: 'EA',
 		scope: {
-			emSelected: '=?',
+			emKeyNavigationSelected: '=?',
 			options: '=emKeyNavigationContainer'
 		},
 		controller: function($scope, $timeout) {
@@ -48,11 +48,11 @@ angular.module('emKeyNavigation', [])
 			$scope.setCurrentElement = function(element){
 				if($scope.currentElement !== element){
 					$scope.currentElement = element;
-					$scope.emSelected = element.id;
+					$scope.emKeyNavigationSelected = element.id;
 					$timeout(function(){
 						element.element.focus();
 					},0);
-					console.log($scope.emSelected);
+					console.log($scope.emKeyNavigationSelected);
 				}
 			};
 			this.registerNavigableElement = function(element){
