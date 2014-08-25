@@ -13,26 +13,37 @@
     <a class="btn btn-lg col-md-4" ng-class="{'btn-success': selected === 'happy'}" ng-href="#" em-key-navigation="'happy'">Happy!</a>
     <a class="btn btn-lg col-md-4" ng-class="{'btn-success': selected === 'wiii'}" ng-href="#" em-key-navigation="'wiii'">Wiiii!</a>
   </div>
-  <div class="row">
-    <div class="col-md-1"></div>
-    <button class="btn btn-sm col-md-1" ng-repeat="key in keyboard[0]" ng-class="{'btn-success': selected === key}" ng-bind="key" em-key-navigation="key"></button>
+  <div class="panel panel-warning">
+    <div class="panel-heading">Non navigable</div>
+    <div class="row panel-body">
+      <button class="btn btn-sm col-md-1" ng-repeat="key in keyboard[0]" ng-bind="key"></button>
+    </div>
   </div>
-  <div class="row">
-    <div class="col-md-1"></div>
-    <button class="btn btn-sm col-md-1" ng-repeat="key in keyboard[1]" ng-class="{'btn-success': selected === key}" ng-bind="key" em-key-navigation="key"></button>
-  </div>
-  <div class="row">
-    <div class="col-md-2"></div>
-    <button class="btn btn-sm col-md-1" ng-repeat="key in keyboard[2]" ng-class="{'btn-success': selected === key}" ng-bind="key" em-key-navigation="key"></button>
-  </div>
-  <div class="row">
-    <div class="col-md-3"></div>
-    <button class="btn btn-sm col-md-5" ng-class="{'btn-success': selected === ' '}" em-key-navigation="' '">&nbsp;</button>
+  <div class="panel panel-info">
+    <div class="panel-heading">Navigable</div>
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-md-1"></div>
+        <button class="btn btn-sm col-md-1" ng-repeat="key in keyboard[1]" ng-class="{'btn-success': selected === key}" ng-bind="key" em-key-navigation="key"></button>
+      </div>
+      <div class="row">
+        <div class="col-md-1"></div>
+        <button class="btn btn-sm col-md-1" ng-repeat="key in keyboard[2]" ng-class="{'btn-success': selected === key}" ng-bind="key" em-key-navigation="key"></button>
+      </div>
+      <div class="row">
+        <div class="col-md-2"></div>
+        <button class="btn btn-sm col-md-1" ng-repeat="key in keyboard[3]" ng-class="{'btn-success': selected === key}" ng-bind="key" em-key-navigation="key"></button>
+      </div>
+      <div class="row">
+        <div class="col-md-3"></div>
+        <button class="btn btn-sm col-md-5" ng-class="{'btn-success': selected === ' '}" em-key-navigation="' '">&nbsp;</button>
+      </div>
+    </div>
   </div>
   <div class="well form-horizontal">
     <h2>Key Navigation Options</h2>
     <div class="form-group">
-      <div class="col-sm-12" for="cycle">
+      <div class="col-sm-12">
         <div class="checkbox">
           <label>
             <input type="checkbox" ng-model="keyNavigationOptions.cycle"></input> Should cycle after end is reached?
@@ -41,7 +52,7 @@
       </div>
     </div>
     <div class="form-group">
-      <div class="col-sm-12" for="cycle">
+      <div class="col-sm-12">
         <div class="checkbox">
           <label>
             <input type="checkbox" ng-model="keyNavigationOptions.strictHorizontal"></input> Should navigate strictly those items at the same height?
@@ -50,7 +61,7 @@
       </div>
     </div>
     <div class="form-group">
-      <div class="col-sm-12" for="cycle">
+      <div class="col-sm-12">
         <div class="checkbox">
           <label>
             <input type="checkbox" ng-model="keyNavigationOptions.strictVertical"></input> Should navigate strictly those items at the same column?
@@ -59,7 +70,7 @@
       </div>
     </div>
     <div class="form-group">
-      <div class="col-sm-12" for="cycle">
+      <div class="col-sm-12">
         <div class="checkbox">
           <label>
             <input type="checkbox" ng-model="keyNavigationOptions.followMouse"></input> Should follow the mouse focus?
@@ -68,5 +79,10 @@
       </div>
     </div>
     <code>{{keyNavigationOptions}}</code>
+    <hr/>
+    <div class="form-group">
+        <p>Currently selected item: <code>{{selected}}</code></p>
+      </div>
+    </div>
   </div>
 </div>

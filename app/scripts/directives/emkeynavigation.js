@@ -52,7 +52,6 @@ angular.module('emKeyNavigation', [])
 					$timeout(function(){
 						element.element.focus();
 					},0);
-					console.log($scope.emKeyNavigationSelected);
 				}
 			};
 			this.registerNavigableElement = function(element){
