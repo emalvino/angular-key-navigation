@@ -82,12 +82,6 @@ angular.module('emKeyNavigation', [])
 				if($scope.currentElement === element){
 					return;
 				}
-				if(angular.isDefined(event)){
-					console.log(element.id + ' ' + event.type);
-				}
-				else{
-					console.log(element.id + ' ' + event);
-				}
 				$scope.currentElement = element;
 				$scope.emKeyNavigationSelected = element.id;
 				if(angular.isUndefined(event) || event.type !== 'focus'){
@@ -159,11 +153,11 @@ angular.module('emKeyNavigation', [])
 		},
 		link: function postLink(scope, element) {
 			element.on('keydown', function(event){
-				if(scope.isTrue('preventDefault')){
-					event.preventDefault();
-				}
 				angular.forEach(scope.directions, function(direction){
 					if(direction.keys.indexOf(event.keyCode) > -1) {
+						if(scope.isTrue('preventDefault')){
+							event.preventDefault();
+						}
 						return scope.go(direction);
 					}
 				});

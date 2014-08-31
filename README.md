@@ -6,7 +6,7 @@ angular-key-navigation
 
 ##Description
 AngularJS directive to navigate focusable elements (anchors, buttons, inputs, etc) using keys.
-It relies on the keydown event, so it applies to keyboards and smart-tv remote control events.
+It relies on the `keydown` event, so it applies to keyboards and smart-tv remote control events.
 
 ##Installation
 Not yet published
