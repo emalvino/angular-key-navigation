@@ -8,7 +8,7 @@ angular.module('emKeyNavigation', [])
 			emKeyNavigationSelected: '=?',
 			options: '=emKeyNavigationContainer'
 		},
-		controller: function($scope, $timeout, $filter) {
+		controller: ['$scope', '$timeout', '$filter', function($scope, $timeout, $filter) {
 			//Utility function
 			$scope.hasOptions = function(option1, option2, option3){
 				if(angular.isUndefined($scope.options)){
@@ -150,7 +150,7 @@ angular.module('emKeyNavigation', [])
 					$scope.setCurrentElement(nextElement);
 				}
 			};
-		},
+		}],
 		link: function postLink(scope, element) {
 			element.on('keydown', function(event){
 				angular.forEach(scope.directions, function(direction){
