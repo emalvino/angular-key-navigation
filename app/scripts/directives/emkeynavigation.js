@@ -8,10 +8,30 @@ angular.module('emKeyNavigation', [])
 			emKeyNavigationSelected: '=?',
 			options: '=emKeyNavigationContainer'
 		},
-		controller: function($scope, $timeout) {
+		controller: function($scope, $timeout, $filter) {
+			//Utility function
+			$scope.hasOptions = function(option1, option2, option3){
+				if(angular.isUndefined($scope.options)){
+					return false;
+				}
+				if(angular.isUndefined($scope.options[option1])){
+					return false;
+				}
+				if(angular.isDefined(option2) && angular.isUndefined($scope.options[option1][option2])){
+					return false;
+				}
+				if(angular.isDefined(option3) && angular.isUndefined($scope.options[option1][option2][option3])){
+					return false;
+				}
+				return true;
+			};
+			$scope.isTrue = function(option){
+				return $scope.hasOptions(option) && $scope.options[option] === true;
+			};
 			$scope.directions = {
 				left: {
-					key: 37,
+					name: 'left',
+					keys: [37],
 					axis: 'Horizontal',
 					angle: {
 						true: function(angle){ return angle === Math.PI; },
@@ -19,7 +39,8 @@ angular.module('emKeyNavigation', [])
 					}
 				},
 				right: {
-					key: 39,
+					name: 'right',
+					keys: [39],
 					axis: 'Horizontal',
 					angle: {
 						true: function(angle){ return angle === 0; },
@@ -27,7 +48,8 @@ angular.module('emKeyNavigation', [])
 					}
 				},
 				up: {
-					key: 38,
+					name: 'up',
+					keys: [38],
 					axis: 'Vertical',
 					angle: {
 						true: function(angle){ return angle === -Math.PI / 2; },
@@ -35,7 +57,8 @@ angular.module('emKeyNavigation', [])
 					}
 				},
 				down: {
-					key: 40,
+					name: 'down',
+					keys: [40],
 					axis: 'Vertical',
 					angle: {
 						true: function(angle){ return angle === Math.PI / 2; },
@@ -43,12 +66,31 @@ angular.module('emKeyNavigation', [])
 					}
 				}
 			};
+			$scope.directions.left.opposite = $scope.directions.right;
+			$scope.directions.right.opposite = $scope.directions.left;
+			$scope.directions.up.opposite = $scope.directions.down;
+			$scope.directions.down.opposite = $scope.directions.up;
+			// Check for keys overrides
+			if($scope.hasOptions('keys')){
+				angular.forEach($scope.options.keys, function(value, key){
+					$scope.directions[key].keys = value;
+				});
+			}
 			$scope.navigableElements = [];
 			$scope.currentElement = undefined;
-			$scope.setCurrentElement = function(element){
-				if($scope.currentElement !== element){
-					$scope.currentElement = element;
-					$scope.emKeyNavigationSelected = element.id;
+			$scope.setCurrentElement = function(element, event){
+				if($scope.currentElement === element){
+					return;
+				}
+				if(angular.isDefined(event)){
+					console.log(element.id + ' ' + event.type);
+				}
+				else{
+					console.log(element.id + ' ' + event);
+				}
+				$scope.currentElement = element;
+				$scope.emKeyNavigationSelected = element.id;
+				if(angular.isUndefined(event) || event.type !== 'focus'){
 					$timeout(function(){
 						element.element.focus();
 					},0);
@@ -59,8 +101,8 @@ angular.module('emKeyNavigation', [])
 				if(angular.isUndefined($scope.currentElement)){
 					$scope.setCurrentElement(element);
 				}
-				var updateCallback = function(){
-					$scope.setCurrentElement(element);
+				var updateCallback = function(event){
+					$scope.setCurrentElement(element, event);
 				};
 				element.element.on('focus', updateCallback);
 				$scope.$watch('options.followMouse', function(newValue){
@@ -84,14 +126,17 @@ angular.module('emKeyNavigation', [])
 				return result;
 			};
 			$scope.getNextElement = function(direction, distance){
-				console.log($scope.currentElement.element.html());
+				// Check for override
+				if($scope.hasOptions('overrides', $scope.currentElement.id, direction.name)){
+					var override = $scope.options.overrides[$scope.currentElement.id][direction.name];
+					return $filter('filter')($scope.navigableElements, {id: override})[0];
+				}
 				var nextElement;
 				var nextDistance;
 				angular.forEach($scope.navigableElements, function(otherElement) {
 					if(otherElement !== $scope.currentElement){
 						var vectorDistance = $scope.calculateDistance($scope.currentElement.element.offset(), otherElement.element.offset());
-						console.log(vectorDistance);
-						var strict = $scope.options['strict' + direction.axis] === true;
+						var strict = $scope.isTrue('strict' + direction.axis);
 						if(direction.angle[strict](vectorDistance.angle)){
 							if(angular.isUndefined(nextElement) || distance(vectorDistance.distance, nextDistance.distance) === vectorDistance.distance){
 								nextElement = otherElement;
@@ -104,8 +149,8 @@ angular.module('emKeyNavigation', [])
 			};
 			$scope.go = function(direction){
 				var nextElement = $scope.getNextElement(direction, Math.min);
-				if(angular.isUndefined(nextElement) && $scope.options.cycle){
-					nextElement = $scope.getNextElement(direction, Math.max);
+				if(angular.isUndefined(nextElement) && $scope.isTrue('cycle')){
+					nextElement = $scope.getNextElement(direction.opposite, Math.max);
 				}
 				if(angular.isDefined(nextElement)){
 					$scope.setCurrentElement(nextElement);
@@ -114,8 +159,11 @@ angular.module('emKeyNavigation', [])
 		},
 		link: function postLink(scope, element) {
 			element.on('keydown', function(event){
+				if(scope.isTrue('preventDefault')){
+					event.preventDefault();
+				}
 				angular.forEach(scope.directions, function(direction){
-					if(event.keyCode === direction.key) {
+					if(direction.keys.indexOf(event.keyCode) > -1) {
 						return scope.go(direction);
 					}
 				});

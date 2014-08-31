@@ -13,7 +13,7 @@
     <a class="btn btn-lg col-md-4" ng-class="{'btn-success': selected === 'happy'}" ng-href="#" em-key-navigation="'happy'">Happy!</a>
     <a class="btn btn-lg col-md-4" ng-class="{'btn-success': selected === 'wiii'}" ng-href="#" em-key-navigation="'wiii'">Wiiii!</a>
   </div>
-  <div class="panel panel-warning">
+  <div class="panel panel-danger">
     <div class="panel-heading">Non navigable</div>
     <div class="row panel-body">
       <button class="btn btn-sm col-md-1" ng-repeat="key in keyboard[0]" ng-bind="key"></button>
@@ -37,6 +37,30 @@
       <div class="row">
         <div class="col-md-3"></div>
         <button class="btn btn-sm col-md-5" ng-class="{'btn-success': selected === ' '}" em-key-navigation="' '">&nbsp;</button>
+      </div>
+    </div>
+  </div>
+  <div class="panel panel-warning">
+    <div class="panel-heading">Navigation overrides</div>
+    <div class="panel-body">
+      <div class="row">
+        <button class="btn btn-sm col-md-1" ng-class="{'btn-success': selected === '1'}" em-key-navigation="'1'">1</button>
+        <button class="btn btn-sm col-md-1 col-md-offset-10" ng-class="{'btn-success': selected === '2'}" em-key-navigation="'2'">2</button>
+      </div>
+      <div class="row">
+        <input type="text" class="col-md-1 col-md-offset-5" ng-model="keyNavigationOptions.overrides.center.up"/>
+      </div>
+      <div class="row">
+        <input type="text" class="col-md-1 col-md-offset-4" ng-model="keyNavigationOptions.overrides.center.left"/>
+        <button class="btn btn-sm col-md-1" ng-class="{'btn-success': selected === 'center'}" em-key-navigation="'center'">Center</button>
+        <input type="text" class="col-md-1" ng-model="keyNavigationOptions.overrides.center.right"/>
+      </div>
+      <div class="row">
+        <input type="text" class="col-md-1 col-md-offset-5" ng-model="keyNavigationOptions.overrides.center.down"/>
+      </div>
+      <div class="row">
+        <button class="btn btn-sm col-md-1" ng-class="{'btn-success': selected === '3'}" em-key-navigation="'3'">3</button>
+        <button class="btn btn-sm col-md-1 col-md-offset-10" ng-class="{'btn-success': selected === '4'}" em-key-navigation="'4'">4</button>
       </div>
     </div>
   </div>
