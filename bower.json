@@ -1,5 +1,5 @@
 {
-  "name": "angular-my-directive",
+  "name": "angular-key-navigation",
   "version": "0.0.1",
   "main": "directive.js",
   "ignore": [
