@@ -1,19 +1,15 @@
 {
-  "name": "ng-key-navigation",
-  "version": "0.0.0",
+  "name": "angular-my-directive",
+  "version": "0.0.1",
+  "main": "directive.js",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "components",
+    "sample"
+  ],
   "dependencies": {
-    "angular": "1.2.23",
-    "json3": "~3.2.6",
-    "es5-shim": "~2.1.0",
-    "jquery": "~1.11.0",
-    "bootstrap": "~3.2.0",
-    "angular-resource": "1.2.23",
-    "angular-cookies": "1.2.23",
-    "angular-sanitize": "1.2.23",
-    "angular-route": "1.2.23"
-  },
-  "devDependencies": {
-    "angular-mocks": "1.2.23",
-    "angular-scenario": "1.2.23"
+    "angular": "~1.2.20",
+    "jquery": "~1.11.0"
   }
 }
