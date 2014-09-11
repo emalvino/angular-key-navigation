@@ -192,15 +192,42 @@ describe('Directive: emKeyNavigation', function () {
       expect(scope.selected).toBe('f');
     }));
   });
-  describe('Overrides', function(){
-    describe('Navigation', function(){
-
-    });
-    describe('Keys', function(){
-
-    });
+  describe('Override', function(){
+    it('should use provided navigation', inject(function($compile){
+      element = angular.element(
+        '<div em-key-navigation-container="{cycle: false, overrides: {a: {right: \'c\'}}}" em-key-navigation-selected="selected">' +
+        '<a href="#" em-key-navigation="\'a\'" id="a">a</a>' +
+        '<a href="#" em-key-navigation="\'b\'" id="b">b</a>' +
+        '<a href="#" em-key-navigation="\'c\'" id="c">c</a>' +
+        '</div>');
+      element = $compile(element)(scope);
+      scope.$digest();
+      var s = spyOn($.fn, 'offset').andCallFake(function() {
+        var id = s.mostRecentCall.object.attr('id');
+        return offsetMocks[id];
+      });
+      element.find('a#a').triggerHandler('focus');
+      element.triggerHandler({type: 'keydown', keyCode: 39});
+      scope.$digest();
+      expect(scope.selected).toBe('c');
+    }));
+    it('should use provided keys', inject(function($compile){
+      element = angular.element(
+        '<div em-key-navigation-container="{cycle: false, keys: { left: [65] }}" em-key-navigation-selected="selected">' +
+        '<a href="#" em-key-navigation="\'e\'" id="e">e</a>' +
+        '<a href="#" em-key-navigation="\'f\'" id="f">f</a>' +
+        '</div>');
+      element = $compile(element)(scope);
+      scope.$digest();
+      var s = spyOn($.fn, 'offset').andCallFake(function() {
+        var id = s.mostRecentCall.object.attr('id');
+        return offsetMocks[id];
+      });
+      element.find('a#f').triggerHandler('focus');
+      element.triggerHandler({type: 'keydown', keyCode: 65});
+      scope.$digest();
+      expect(scope.selected).toBe('e');
+    }));
 
   });
-
-
 });
