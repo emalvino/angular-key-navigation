@@ -11,7 +11,7 @@
     "angular-cookies": "1.2.23",
     "angular-sanitize": "1.2.23",
     "angular-route": "1.2.23",
-    "emalvino/angular-key-navigation": "~0.0.1"
+    "emalvino/angular-key-navigation": "/home/edu/angular-key-navigation"
   },
   "devDependencies": {
     "angular-mocks": "1.2.23",
