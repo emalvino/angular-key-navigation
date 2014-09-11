@@ -1,16 +1,29 @@
 angular-key-navigation
 ======================
 ##Latest version
-0.0.0
-**Still under development**
+0.0.1
 
 ##Description
 AngularJS directive to navigate focusable elements (anchors, buttons, inputs, etc) using keys.
 It relies on the `keydown` event, so it applies to keyboards and smart-tv remote control events.
 
+##Dependencies
+
+   * jQuery 1.9.0
+   * AngularJS 1.2.20
+
 ##Installation
-Not yet published
-TODO
+```
+npm install angular-key-navigation
+```
+
+Or in bower.json:
+
+```
+  "dependencies": {
+    "emalvino/angular-key-navigation": "~0.0.1"
+  }
+```
 
 ##em-key-navigation-container
 Container directive. It handles all the key events and calculates the next element to be focused based on it's position.
@@ -108,5 +121,5 @@ In order to be able to identify the currently focused element (as described on t
 ```
 
 ##TODO
-*Add hooks for navigation events
-*Navigate between multiple containers
+   * Add hooks for navigation events
+   * Navigate between multiple containers
