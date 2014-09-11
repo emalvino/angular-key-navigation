@@ -21,7 +21,7 @@ Or in bower.json:
 
 ```
   "dependencies": {
-    "emalvino/angular-key-navigation": "~0.0.1"
+    "angular-key-navigation": "~0.0.1"
   }
 ```
 
