@@ -1,5 +1,5 @@
 {
-  "name": "angular-key-navigation",
+  "name": "emalvino/angular-key-navigation",
   "version": "0.0.1",
   "main": "directive.js",
   "ignore": [
